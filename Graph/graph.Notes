@@ -1,0 +1,373 @@
+/**
+
+Dear students,
+Please fill out this feedback form for today’s session, which will be conducted by Instructor Aanand - 
+
+https://docs.google.com/forms/d/e/1FAIpQLSfYBQILet3xXfMH0_WxFFMtQehSVBNuRuTboSp5N2DHXdVhow/viewform?usp=sf_link
+
+Thank you!
+
+
+
+Graphs
+
+
+
+*/
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+public class PracticeGraph {
+    public static void RDFS(int currNode, List<List<Integer>> adjList, int[] visited) {
+        if(visited[currNode] != 1){
+            System.out.println(currNode);
+            visited[currNode] = 1;
+            for(int i : adjList.get(currNode)){
+                if(visited[i] != 1){
+                    RDFS(i, adjList, visited);
+                }
+            }
+        }
+    }
+
+    public static void main(String []args){
+        int n = 5;
+        int graph[][] = new int[n][n]; //Adj Matrix
+        graph[0][4] = 1;
+        graph[0][1] = 1;
+        graph[1][2] = 1;
+        graph[1][3] = 1;
+        graph[1][4] = 1;
+        graph[2][3] = 1;
+        graph[2][1] = 1;
+        graph[3][4] = 1;
+        graph[3][1] = 1;
+        graph[3][2] = 1;
+        graph[4][1] = 1;
+        graph[4][0] = 1;
+        //v vertices and e edges
+        //Space required to create a graph ?
+        //V * V
+
+        List<List<Integer>> adjList = new ArrayList<List<Integer>>();
+        for(int i = 0;i < n;i++){
+            adjList.add(new ArrayList<Integer>());
+        }
+
+        adjList.get(0).add(4);
+        adjList.get(0).add(1);
+
+        adjList.get(1).add(2);
+        adjList.get(1).add(3);
+        adjList.get(1).add(4);
+
+        adjList.get(2).add(1);
+        adjList.get(2).add(3);
+
+        adjList.get(3).add(1);
+        adjList.get(3).add(2);
+        adjList.get(3).add(4);
+
+        adjList.get(4).add(1);
+        adjList.get(4).add(0);
+
+         //V*E
+
+
+        //DFS
+        //Iterative
+
+        int startNode = 3;
+        int[] visited = new int[n];
+        Stack<Integer> stack = new Stack<Integer>();
+        stack.push(startNode);
+
+        while(stack.size() > 0){
+            int curr = stack.pop();
+            if(visited[curr] != 1){
+                System.out.println(curr);
+                visited[curr] = 1;
+                List<Integer> currN = adjList.get(curr);
+                for(int i = 0;i < currN.size();i++){
+                    if(visited[currN.get(i)] != 1){
+                        stack.add(currN.get(i));
+                    }
+                }
+            }
+        }
+
+        System.out.println("-----------------------------");
+
+        //Recursive
+        int visited1[] = new int[n];
+        RDFS(startNode, adjList, visited1);
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
+
+
+
+
+class Node {
+    int x;
+    int y;
+
+    public Node(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Solution { 
+    public boolean isValid(int i, int j, int n, int m) {
+        if(i >= 0 && i < n && j >=0 && j < m)
+            return true;
+        return false;
+    }
+
+    public void DFS(char[][] grid, boolean[][] visited, int i, int j, int n, int m) {
+        Stack<Node> stack  = new Stack<Node>();
+        stack.push(new Node(i, j));
+
+        while(stack.size() > 0) {
+            Node temp = stack.pop();
+            int p = temp.x;
+            int q = temp.y;
+
+            visited[p][q] = true;
+
+            if(isValid(p + 1, q, n, m) && grid[p + 1][q] == '1' && visited[p + 1][q] == false){
+                stack.push(new Node(p + 1, q));
+            }
+            if(isValid(p - 1, q, n, m) && grid[p - 1][q] == '1' && visited[p - 1][q] == false){
+                stack.push(new Node(p - 1, q));
+            }
+            if(isValid(p, q + 1, n, m) && grid[p][q + 1] == '1' && visited[p][q + 1] == false){
+                stack.push(new Node(p, q + 1 ));
+            }
+            if(isValid(p, q - 1, n, m) && grid[p][q - 1] == '1' && visited[p][q - 1] == false){
+                stack.push(new Node(p, q - 1));
+            }
+        }
+    }
+    public int numIslands(char[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        boolean[][] visited = new boolean[n][m];
+        for(boolean[] a : visited)
+            Arrays.fill(a, false);
+
+        int island = 0;
+        for(int i = 0; i < n;i++){
+            for(int j = 0;j < m;j++){
+                if(visited[i][j] == false && grid[i][j] == '1'){
+                    DFS(grid, visited, i, j, n, m);
+                    island = island + 1;
+                }
+            }
+        }
+
+        return island;
+    }
+}
+
+
+
+/**
+
+Dear students,
+Please fill out this feedback form for today’s session, which will be conducted by Instructor Aanand - 
+
+https://docs.google.com/forms/d/e/1FAIpQLSfYBQILet3xXfMH0_WxFFMtQehSVBNuRuTboSp5N2DHXdVhow/viewform?usp=sf_link
+
+Thank you!
+
+
+
+Graphs
+
+
+
+*/
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+public class PracticeGraph {
+    public static void RDFS(int currNode, List<List<Integer>> adjList, int[] visited) {
+        if(visited[currNode] != 1){
+            System.out.println(currNode);
+            visited[currNode] = 1;
+            for(int i : adjList.get(currNode)){
+                if(visited[i] != 1){
+                    RDFS(i, adjList, visited);
+                }
+            }
+        }
+    }
+
+    public static void main(String []args){
+        int n = 5;
+        int graph[][] = new int[n][n]; //Adj Matrix
+        graph[0][4] = 1;
+        graph[0][1] = 1;
+        graph[1][2] = 1;
+        graph[1][3] = 1;
+        graph[1][4] = 1;
+        graph[2][3] = 1;
+        graph[2][1] = 1;
+        graph[3][4] = 1;
+        graph[3][1] = 1;
+        graph[3][2] = 1;
+        graph[4][1] = 1;
+        graph[4][0] = 1;
+        //v vertices and e edges
+        //Space required to create a graph ?
+        //V * V
+
+        List<List<Integer>> adjList = new ArrayList<List<Integer>>();
+        for(int i = 0;i < n;i++){
+            adjList.add(new ArrayList<Integer>());
+        }
+
+        adjList.get(0).add(4);
+        adjList.get(0).add(1);
+
+        adjList.get(1).add(2);
+        adjList.get(1).add(3);
+        adjList.get(1).add(4);
+
+        adjList.get(2).add(1);
+        adjList.get(2).add(3);
+
+        adjList.get(3).add(1);
+        adjList.get(3).add(2);
+        adjList.get(3).add(4);
+
+        adjList.get(4).add(1);
+        adjList.get(4).add(0);
+
+         //V*E
+
+
+        //DFS
+        //Iterative
+
+        int startNode = 3;
+        int[] visited = new int[n];
+        Stack<Integer> stack = new Stack<Integer>();
+        stack.push(startNode);
+
+        while(stack.size() > 0){
+            int curr = stack.pop();
+            if(visited[curr] != 1){
+                System.out.println(curr);
+                visited[curr] = 1;
+                List<Integer> currN = adjList.get(curr);
+                for(int i = 0;i < currN.size();i++){
+                    if(visited[currN.get(i)] != 1){
+                        stack.add(currN.get(i));
+                    }
+                }
+            }
+        }
+
+        System.out.println("-----------------------------");
+
+        //Recursive
+        int visited1[] = new int[n];
+        RDFS(startNode, adjList, visited1);
+
+
+
+
+
+
+
+
+
+
+
+    }
+}
+
+
+
+
+class Node {
+    int x;
+    int y;
+
+    public Node(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+class Solution { 
+    public boolean isValid(int i, int j, int n, int m) {
+        if(i >= 0 && i < n && j >=0 && j < m)
+            return true;
+        return false;
+    }
+
+    public void DFS(char[][] grid, boolean[][] visited, int i, int j, int n, int m) {
+        Stack<Node> stack  = new Stack<Node>();
+        stack.push(new Node(i, j));
+
+        while(stack.size() > 0) {
+            Node temp = stack.pop();
+            int p = temp.x;
+            int q = temp.y;
+
+            visited[p][q] = true;
+
+            if(isValid(p + 1, q, n, m) && grid[p + 1][q] == '1' && visited[p + 1][q] == false){
+                stack.push(new Node(p + 1, q));
+            }
+            if(isValid(p - 1, q, n, m) && grid[p - 1][q] == '1' && visited[p - 1][q] == false){
+                stack.push(new Node(p - 1, q));
+            }
+            if(isValid(p, q + 1, n, m) && grid[p][q + 1] == '1' && visited[p][q + 1] == false){
+                stack.push(new Node(p, q + 1 ));
+            }
+            if(isValid(p, q - 1, n, m) && grid[p][q - 1] == '1' && visited[p][q - 1] == false){
+                stack.push(new Node(p, q - 1));
+            }
+        }
+    }
+    public int numIslands(char[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        boolean[][] visited = new boolean[n][m];
+        for(boolean[] a : visited)
+            Arrays.fill(a, false);
+
+        int island = 0;
+        for(int i = 0; i < n;i++){
+            for(int j = 0;j < m;j++){
+                if(visited[i][j] == false && grid[i][j] == '1'){
+                    DFS(grid, visited, i, j, n, m);
+                    island = island + 1;
+                }
+            }
+        }
+
+        return island;
+    }
+}
